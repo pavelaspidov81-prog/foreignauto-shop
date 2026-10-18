@@ -81,10 +81,9 @@ nav.main a:hover,nav.main a[aria-current]{color:var(--ink);background:var(--soft
 .btn-dark-line{border-color:rgb(255 255 255 / .35);color:var(--on-band)}
 .btn-dark-line:hover{border-color:var(--on-band)}
 .bar .btn{padding:12px 18px;font-size:.92rem}
-@media (max-width:960px){nav.main{display:none}.about-link{margin-left:auto}}
-@media (max-width:520px){header{padding-top:8px}.bar{gap:8px;padding:6px 6px 6px 16px}.logo-h{height:30px}.bar .ig{display:none}.about-link{padding:9px 12px;font-size:.85rem}.bar .btn-call{padding:12px 14px}.bar .btn-call span.num{display:none}.lang button[aria-pressed="true"]{display:none}.lang button{padding:9px 10px}}
-@media (max-width:400px){header .wrap{padding-left:12px;padding-right:12px}.bar{gap:6px;padding-left:12px}.logo-h{height:25px}.about-link{padding:8px 10px}}
-@media (max-width:350px){.bar .btn-call{display:none}}
+@media (max-width:960px){nav.main,.bar .about-link,.bar .ig{display:none}.lang{margin-left:auto}}
+@media (max-width:520px){header{padding-top:8px}.bar{gap:8px;padding:6px 6px 6px 14px}.bar .brand{flex:1 1 0;min-width:0}.bar .logo-h{width:100%;max-width:230px;height:auto}.lang{margin-left:0}.bar .btn-call{display:none}.lang button[aria-pressed="true"]{display:none}.lang button{min-height:38px;padding:0 12px}}
+@media (max-width:400px){header .wrap{padding-left:12px;padding-right:12px}.bar{gap:6px;padding-left:10px}}
 
 /* hero */
 .hero{padding-block:64px 72px}
@@ -262,6 +261,43 @@ footer{border-top:1px solid var(--line);padding-block:40px 52px;color:var(--mute
 @media (max-width:900px){.ah-grid,.story{grid-template-columns:1fr;gap:32px}.about-hero{padding-block:40px 56px}}
 @media (max-width:560px){.values{grid-template-columns:1fr}.ig-tile{min-height:180px}}
 @media (prefers-reduced-motion:no-preference){.btn,.lang button,nav.main a,.ig-tile{transition:background .15s,color .15s,filter .15s,border-color .15s}}
+/* phones: menu, bottom action bar, compact cards, larger tap targets */
+html{scroll-padding-top:88px}
+.menu-btn{display:none;place-items:center;width:44px;height:44px;flex:0 0 auto;border:0;border-radius:999px;background:var(--soft);color:var(--ink);cursor:pointer}
+.menu-btn .i-close,.menu-btn[aria-expanded="true"] .i-open{display:none}
+.menu-btn[aria-expanded="true"] .i-close{display:block}
+.mnav{display:grid;margin-top:8px;padding:8px;background:var(--panel);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+.mnav[hidden]{display:none}
+.mnav a{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 16px;border-radius:14px;text-decoration:none;font-weight:600;color:var(--ink)}
+.mnav a:hover,.mnav a[aria-current]{background:var(--soft)}
+.mnav a[aria-current]{color:var(--blue)}
+.mnav svg{color:var(--muted)}
+@media (max-width:960px){.menu-btn{display:grid}.lang button{min-height:38px}}
+@media (min-width:961px){.mnav{display:none!important}}
+.nap a,.foot a{padding-block:12px}
+.dock{display:none}
+@media (max-width:520px){
+  .dock{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:25;padding:10px max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:color-mix(in srgb,var(--panel) 94%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+  .dock .btn{min-height:48px;padding:0 8px;font-size:.92rem}
+  body{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}
+  .hero-text .cta{display:grid;grid-template-columns:1fr 1fr}
+  .hero-text .cta .btn:first-child{grid-column:1/-1}
+  .hero-text .cta .btn{padding-inline:12px}
+}
+@media (max-width:560px){
+  .services{gap:12px}
+  .svc{grid-template-columns:44px 1fr;gap:4px 16px;padding:20px}
+  .svc .ico{grid-row:span 2;margin:0}
+  .svc h3,.svc p{grid-column:2}
+  .svc .go{top:16px;right:16px}
+  .svc.hl{padding-right:66px}
+}
+@media (max-width:760px){
+  .steps{gap:12px}
+  .step{grid-template-columns:44px 1fr;gap:4px 16px;padding:22px}
+  .step .n{grid-row:span 2;margin:0}
+  .step h3,.step p{grid-column:2}
+}
 </style>
 
 </head>
@@ -283,7 +319,16 @@ footer{border-top:1px solid var(--line);padding-block:40px 52px;color:var(--mute
         <button type="button" id="l-ru" aria-pressed="false">RU</button>
       </div>
       <a class="btn btn-main btn-call" href="tel:+17209373445"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="num">(720) 937-3445</span></a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Menu"><svg class="i-open" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="i-close" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>
+    <nav class="mnav" id="mnav" aria-label="Menu" hidden>
+      <a href="#services"><span data-l="en">Services</span><span data-l="ru">Услуги</span></a>
+      <a href="#makes"><span data-l="en">Makes we fix</span><span data-l="ru">Какие марки чиним</span></a>
+      <a href="#how"><span data-l="en">How it works</span><span data-l="ru">Как мы работаем</span></a>
+      <a href="#visit"><span data-l="en">Visit</span><span data-l="ru">Контакты</span></a>
+      <a href="about.html"><span data-l="en">About us</span><span data-l="ru">О нас</span></a>
+      <a href="https://www.instagram.com/foreignauto.shop/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>@foreignauto.shop</a>
+    </nav>
   </div>
 </header>
 
@@ -461,6 +506,11 @@ footer{border-top:1px solid var(--line);padding-block:40px 52px;color:var(--mute
     <div>Foreign Auto 5280 LLC · 3720 S Ouray Way, Aurora, CO 80013 · (720) 937-3445<br>foreignauto.shop · <a href="https://www.instagram.com/foreignauto.shop/" target="_blank" rel="noopener">Instagram @foreignauto.shop</a> · © 2026</div>
   </div>
 </footer>
+<nav class="dock" aria-label="Contact">
+  <a class="btn btn-main" href="tel:+17209373445"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span data-l="en">Call</span><span data-l="ru">Позвонить</span></a>
+  <a class="btn btn-line" href="sms:+17209373445"><span data-l="en">Text</span><span data-l="ru">SMS</span></a>
+  <a class="btn btn-line" href="#book"><span data-l="en">Book</span><span data-l="ru">Запись</span></a>
+</nav>
 
 <script>
 (function(){
@@ -475,6 +525,11 @@ footer{border-top:1px solid var(--line);padding-block:40px 52px;color:var(--mute
   try{start=localStorage.getItem('fa-lang')||start}catch(e){}
   if(location.hash==='#ru')start='ru';
   set(start);
+  var mb=document.querySelector('.menu-btn'),mn=document.getElementById('mnav');
+  function menu(o){mb.setAttribute('aria-expanded',o);mn.hidden=!o}
+  mb.onclick=function(){menu(mn.hidden)};
+  mn.addEventListener('click',function(e){if(e.target.closest('a'))menu(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!mn.hidden){menu(false);mb.focus()}});
   var bk=document.getElementById('book');if(bk)bk.addEventListener('submit',function(e){e.preventDefault();document.getElementById('f-msg').hidden=false});
 })();
 </script>
