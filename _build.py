@@ -16,15 +16,31 @@ from html.parser import HTMLParser
 from _brands import BRANDS
 
 SITE = 'https://foreignauto.shop/'
+# Google Analytics 4 measurement ID (looks like G-XXXXXXXXXX). Empty means no analytics on the site.
+GA_ID = ''
+
+# Loads GA4 and reports taps on phone, text and Instagram links and booking form sends as events.
+GA_SNIPPET = '''<script async src="https://www.googletagmanager.com/gtag/js?id={id}"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}
+gtag('js',new Date());gtag('config','{id}');
+document.addEventListener('click',function(e){{var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.getAttribute('href');
+  if(h.indexOf('tel:')===0)gtag('event','phone_call',{{link_url:h}});
+  else if(h.indexOf('sms:')===0)gtag('event','text_message',{{link_url:h}});
+  else if(h.indexOf('instagram.com')>-1)gtag('event','instagram_click');
+  else if(h.indexOf('google.com/maps')>-1)gtag('event','get_directions');}});
+document.addEventListener('submit',function(e){{if(e.target.id==='book')gtag('event','generate_lead',{{form:'book'}})}});
+</script>
+'''
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 META = {
     ('index', 'en'): ('Auto Repair in Aurora, CO | Foreign Auto 5280',
-        'Honest car repair in Aurora, CO. 25 years fixing Japanese, Korean and American cars. Photos and a written estimate before any work, 12-month warranty. Call (720) 937-3445.'),
+        'Honest car repair in Aurora, CO. 25 years fixing Japanese, Korean, European and American cars. Photos and a written estimate before any work, 12-month warranty. Call (720) 937-3445.'),
     ('about', 'en'): ('About Us | Foreign Auto 5280, Auto Repair in Aurora, CO',
         'Meet Foreign Auto 5280, an owner-run repair shop in the Mission Viejo area of Aurora, CO. 25 years of experience, service in English and Russian, 12-month warranty.'),
     ('index', 'ru'): ('Русский автосервис в Авроре и Денвере | Foreign Auto 5280',
-        'Автосервис с русскоговорящим мастером в Авроре, Колорадо, рядом с Денвером. 25 лет ремонтируем японские, корейские и американские машины. Фото и смета до ремонта, гарантия 12 месяцев. (720) 937-3445.'),
+        'Автосервис с русскоговорящим мастером в Авроре, Колорадо, рядом с Денвером. 25 лет ремонтируем японские, корейские, европейские и американские машины. Фото и смета до ремонта, гарантия 12 месяцев. (720) 937-3445.'),
     ('about', 'ru'): ('О нас | Foreign Auto 5280, русский автосервис в Авроре, CO',
         'Foreign Auto 5280: небольшой автосервис в районе Mission Viejo в Авроре, Колорадо. Владелец сам работает в цеху, говорим по-русски и по-английски, 25 лет опыта, гарантия 12 месяцев.'),
 }
@@ -138,6 +154,8 @@ def build(page, lang, src=None):
             s = s.replace(a, b)
         # pages live one folder down
         s = s.replace('src="img/', 'src="../img/').replace('url(img/', 'url(../img/')
+    if GA_ID:
+        s = s.replace('</head>', GA_SNIPPET.format(id=GA_ID) + '</head>', 1)
     out = os.path.join(HERE, ('ru/' if lang == 'ru' else '') + page + '.html')
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, 'w', encoding='utf-8').write(s)
@@ -205,7 +223,7 @@ def brand_source(b):
       <div class="sec-head">
         <p class="eyebrow">{span('Other makes', 'Другие марки')}</p>
         <h2>{span('Driving something else?', 'У вас другая машина?')}</h2>
-        <p>{span('We also fix Mazda, Chevrolet, Jeep, Ram, Dodge and most everyday cars. EVs are the one exception.', 'Ещё чиним Mazda, Chevrolet, Jeep, Ram, Dodge и почти любые повседневные машины. Не берём только электромобили.')}</p>
+        <p>{span('We also fix Mazda, Mercedes-Benz, BMW, Audi, Volkswagen, Chevrolet, Jeep, Ram and every other make except electric cars.', 'Ещё чиним Mazda, Mercedes-Benz, BMW, Audi, Volkswagen, Chevrolet, Jeep, Ram и любые другие марки, кроме электромобилей.')}</p>
       </div>
       <div class="makes">{others}<a class="make" href="./#makes">{span('All makes', 'Все марки')}</a></div>
     </div>

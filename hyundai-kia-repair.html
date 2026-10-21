@@ -336,6 +336,14 @@ html{scroll-padding-top:88px}
 a.make{text-decoration:none;color:var(--ink)}
 a.make:hover{border-color:var(--blue);color:var(--blue)}
 .ig-foot svg{display:inline-block;vertical-align:-2px;margin-right:5px}
+.faq{display:grid;gap:10px;max-width:820px;margin-inline:auto}
+.faq details{background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px;padding:14px 22px;cursor:pointer;list-style:none;font:700 1.05rem/1.35 var(--display);letter-spacing:-.01em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:0 0 auto;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue);font:600 1.1rem/1 var(--body)}
+.faq details[open] summary::after{content:"−"}
+.faq details p{padding:0 22px 20px;color:var(--muted);max-width:40em}
+@media (max-width:560px){.faq summary{padding:12px 16px;font-size:1rem}.faq details p{padding:0 16px 16px}}
 </style>
 
 </head>
@@ -363,6 +371,7 @@ a.make:hover{border-color:var(--blue);color:var(--blue)}
       <a href="./#services"><span>Services</span></a>
       <a href="./#makes"><span>Makes we fix</span></a>
       <a href="./#how"><span>How it works</span></a>
+      <a href="./#faq"><span>Questions</span></a>
       <a href="./#visit"><span>Visit</span></a>
       <a href="about.html"><span>About us</span></a>
       <a href="https://www.instagram.com/foreignauto.shop/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>@foreignauto.shop</a>
@@ -414,7 +423,7 @@ a.make:hover{border-color:var(--blue);color:var(--blue)}
       <div class="sec-head">
         <p class="eyebrow"><span>Other makes</span></p>
         <h2><span>Driving something else?</span></h2>
-        <p><span>We also fix Mazda, Chevrolet, Jeep, Ram, Dodge and most everyday cars. EVs are the one exception.</span></p>
+        <p><span>We also fix Mazda, Mercedes-Benz, BMW, Audi, Volkswagen, Chevrolet, Jeep, Ram and every other make except electric cars.</span></p>
       </div>
       <div class="makes"><a class="make" href="toyota-repair.html"><span>Toyota</span></a><a class="make" href="honda-repair.html"><span>Honda</span></a><a class="make" href="subaru-repair.html"><span>Subaru</span></a><a class="make" href="nissan-repair.html"><span>Nissan</span></a><a class="make" href="ford-repair.html"><span>Ford</span></a><a class="make" href="./#makes"><span>All makes</span></a></div>
     </div>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Русский автосервис в Авроре и Денвере | Foreign Auto 5280</title>
-<meta name="description" content="Автосервис с русскоговорящим мастером в Авроре, Колорадо, рядом с Денвером. 25 лет ремонтируем японские, корейские и американские машины. Фото и смета до ремонта, гарантия 12 месяцев. (720) 937-3445.">
+<meta name="description" content="Автосервис с русскоговорящим мастером в Авроре, Колорадо, рядом с Денвером. 25 лет ремонтируем японские, корейские, европейские и американские машины. Фото и смета до ремонта, гарантия 12 месяцев. (720) 937-3445.">
 <link rel="canonical" href="https://foreignauto.shop/ru/">
 <link rel="alternate" hreflang="en" href="https://foreignauto.shop/">
 <link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/">
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Foreign Auto 5280">
 <meta property="og:title" content="Русский автосервис в Авроре и Денвере | Foreign Auto 5280">
-<meta property="og:description" content="Автосервис с русскоговорящим мастером в Авроре, Колорадо, рядом с Денвером. 25 лет ремонтируем японские, корейские и американские машины. Фото и смета до ремонта, гарантия 12 месяцев. (720) 937-3445.">
+<meta property="og:description" content="Автосервис с русскоговорящим мастером в Авроре, Колорадо, рядом с Денвером. 25 лет ремонтируем японские, корейские, европейские и американские машины. Фото и смета до ремонта, гарантия 12 месяцев. (720) 937-3445.">
 <meta property="og:url" content="https://foreignauto.shop/ru/">
 <meta property="og:image" content="https://foreignauto.shop/img/og-cover.jpg">
 <meta property="og:image:width" content="1200">
@@ -335,6 +335,14 @@ html{scroll-padding-top:88px}
 a.make{text-decoration:none;color:var(--ink)}
 a.make:hover{border-color:var(--blue);color:var(--blue)}
 .ig-foot svg{display:inline-block;vertical-align:-2px;margin-right:5px}
+.faq{display:grid;gap:10px;max-width:820px;margin-inline:auto}
+.faq details{background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px;padding:14px 22px;cursor:pointer;list-style:none;font:700 1.05rem/1.35 var(--display);letter-spacing:-.01em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:0 0 auto;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue);font:600 1.1rem/1 var(--body)}
+.faq details[open] summary::after{content:"−"}
+.faq details p{padding:0 22px 20px;color:var(--muted);max-width:40em}
+@media (max-width:560px){.faq summary{padding:12px 16px;font-size:1rem}.faq details p{padding:0 16px 16px}}
 </style>
 
 </head>
@@ -362,6 +370,7 @@ a.make:hover{border-color:var(--blue);color:var(--blue)}
       <a href="#services"><span>Услуги</span></a>
       <a href="#makes"><span>Какие марки чиним</span></a>
       <a href="#how"><span>Как мы работаем</span></a>
+      <a href="#faq"><span>Вопросы</span></a>
       <a href="#visit"><span>Контакты</span></a>
       <a href="about.html"><span>О нас</span></a>
       <a href="https://www.instagram.com/foreignauto.shop/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>@foreignauto.shop</a>
@@ -376,7 +385,7 @@ a.make:hover{border-color:var(--blue);color:var(--blue)}
       <div class="hero-text">
         <p class="eyebrow"><span>Автосервис · Аврора, Колорадо</span></p>
         <h1><span>Чиним ваш автомобиль в Авроре. <em>Честно и надёжно.</em></span></h1>
-        <p class="lede"><span>25 лет ремонтируем японские, корейские и американские машины. Находим неисправность, присылаем фото и цену, а к ремонту приступаем только после вашего согласия.</span></p>
+        <p class="lede"><span>25 лет ремонтируем японские, корейские, европейские и американские машины. Находим неисправность, присылаем фото и цену, а к ремонту приступаем только после вашего согласия.</span></p>
         <div class="cta">
           <a class="btn btn-main" href="tel:+17209373445"><span>Позвонить (720) 937-3445</span></a>
           <a class="btn btn-line" href="#book"><span>Записаться</span></a>
@@ -413,7 +422,7 @@ a.make:hover{border-color:var(--blue);color:var(--blue)}
 
   <div class="wrap">
     <div class="strip">
-      <div><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.2L3.6 17.2a1.6 1.6 0 0 0 2.3 2.3l5.7-5.7a4 4 0 0 0 5.2-5.4l-2.5 2.5-2.1-.4-.4-2.1z"/></svg><b><span>25 лет</span></b><p><span>с японскими, корейскими и американскими машинами.</span></p></div>
+      <div><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.2L3.6 17.2a1.6 1.6 0 0 0 2.3 2.3l5.7-5.7a4 4 0 0 0 5.2-5.4l-2.5 2.5-2.1-.4-.4-2.1z"/></svg><b><span>25 лет</span></b><p><span>с японскими, корейскими, европейскими и американскими машинами.</span></p></div>
       <div><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><b><span>Гарантия 12 месяцев</span></b><p><span>На запчасти и работу по нашему ремонту.</span></p></div>
       <div><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><b>English · Русский</b><p><span>Объясните проблему на том языке, на котором вам удобно.</span></p></div>
       <div><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/></svg><b><span>И по субботам</span></b><p><span>Не успеваете в будни? Договоримся на субботу.</span></p></div>
@@ -455,7 +464,7 @@ a.make:hover{border-color:var(--blue);color:var(--blue)}
           <h2><span>В названии «Foreign», но <em>американские машины</em> тоже берём</span></h2>
         </div>
         <ul class="mk-list">
-          <li><a href="toyota-repair.html">Toyota</a></li><li><a href="honda-repair.html">Honda</a></li><li><a href="nissan-repair.html">Nissan</a></li><li><a href="subaru-repair.html">Subaru</a></li><li>Mazda</li><li><a href="hyundai-kia-repair.html">Kia</a></li><li><a href="hyundai-kia-repair.html">Hyundai</a></li><li><a href="toyota-repair.html">Lexus</a></li><li><a href="honda-repair.html">Acura</a></li><li><a href="ford-repair.html">Ford</a></li><li>Chevrolet</li><li>Jeep</li><li>Ram</li><li>Dodge</li>
+          <li><a href="toyota-repair.html">Toyota</a></li><li><a href="honda-repair.html">Honda</a></li><li><a href="nissan-repair.html">Nissan</a></li><li><a href="subaru-repair.html">Subaru</a></li><li>Mazda</li><li><a href="hyundai-kia-repair.html">Kia</a></li><li><a href="hyundai-kia-repair.html">Hyundai</a></li><li><a href="toyota-repair.html">Lexus</a></li><li><a href="honda-repair.html">Acura</a></li><li><a href="ford-repair.html">Ford</a></li><li>Chevrolet</li><li>Jeep</li><li>Ram</li><li>Dodge</li><li>Mercedes-Benz</li><li>BMW</li><li>Audi</li><li>Volkswagen</li>
         </ul>
         <div class="notes">
           <div class="note"><b><span>Нет вашей марки?</span></b><span>Пришлите год, марку и модель по SMS. Сразу скажем, возьмёмся ли.</span></div>
@@ -509,6 +518,24 @@ a.make:hover{border-color:var(--blue);color:var(--blue)}
       </div>
     </div>
   </div>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head center">
+        <p class="eyebrow"><span>Вопросы</span></p>
+        <h2><span>Перед тем как <em>привезти машину</em></span></h2>
+      </div>
+      <div class="faq">
+        <details><summary><span>Даёте ли вы гарантию?</span></summary><p><span>Да. На запчасти и работу по нашему ремонту даём гарантию 12 месяцев.</span></p></details>
+        <details><summary><span>Начнёте ли вы ремонт без моего согласия?</span></summary><p><span>Нет. Сначала диагностика, потом фото и письменная смета по SMS, и только после вашего «да» начинаем работу. Если по ходу найдём что-то ещё, сначала позвоним.</span></p></details>
+        <details><summary><span>С какими машинами вы работаете?</span></summary><p><span>Со всеми марками: японскими, корейскими, европейскими и американскими легковыми, кроссоверами, минивэнами и пикапами. Не берём только электромобили, например Tesla.</span></p></details>
+        <details><summary><span>Сколько занимает диагностика?</span></summary><p><span>Многие проблемы с Check Engine находим и устраняем в тот же день, когда вы привезли машину. Если нужно ждать запчасти или работа займёт дольше, скажем об этом заранее.</span></p></details>
+        <details><summary><span>Работаете ли вы с компаниями расширенной гарантии?</span></summary><p><span>Да. По ремонту, который покрывает ваша расширенная гарантия, можем сами договориться с компанией, и часто это экономит вам деньги.</span></p></details>
+        <details><summary><span>Можно ли общаться по-русски?</span></summary><p><span>Да. Объясняем любой ремонт простыми словами по-русски или по-английски: по телефону, в SMS или в цеху.</span></p></details>
+        <details><summary><span>Работаете ли вы по субботам?</span></summary><p><span>Мы работаем с понедельника по пятницу до 18:00. В субботу по предварительной записи: позвоните или напишите, договоримся.</span></p></details>
+      </div>
+    </div>
+  </section>
 
   <section id="visit">
     <div class="wrap visit">
