@@ -1,5 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://foreignauto.shop/</loc><lastmod>2026-10-21</lastmod><priority>1.0</priority></url>
-  <url><loc>https://foreignauto.shop/about.html</loc><lastmod>2026-10-21</lastmod><priority>0.7</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://foreignauto.shop/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/about.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/about.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/ru/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/about.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/about.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/toyota-repair.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/toyota-repair.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/toyota-repair.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/ru/toyota-repair.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/toyota-repair.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/toyota-repair.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/honda-repair.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/honda-repair.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/honda-repair.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/ru/honda-repair.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/honda-repair.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/honda-repair.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/subaru-repair.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/subaru-repair.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/subaru-repair.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/ru/subaru-repair.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/subaru-repair.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/subaru-repair.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/hyundai-kia-repair.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/hyundai-kia-repair.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/hyundai-kia-repair.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/ru/hyundai-kia-repair.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/hyundai-kia-repair.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/hyundai-kia-repair.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/nissan-repair.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/nissan-repair.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/nissan-repair.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/ru/nissan-repair.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/nissan-repair.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/nissan-repair.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/ford-repair.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/ford-repair.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/ford-repair.html"/>
+  </url>
+  <url>
+    <loc>https://foreignauto.shop/ru/ford-repair.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://foreignauto.shop/ford-repair.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://foreignauto.shop/ru/ford-repair.html"/>
+  </url>
 </urlset>

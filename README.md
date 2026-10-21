@@ -11,12 +11,17 @@ Live at **https://foreignauto.shop** (served by GitHub Pages).
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | Home page |
-| `about.html` | About page |
+| `index.html`, `about.html`, `*-repair.html` | English pages: home, about, one page per make |
+| `ru/` | The same pages in Russian |
+| `_src/` | Bilingual source of the home and about pages. Not published. |
+| `_build.py`, `_brands.py` | Build script and make-page texts. Not published. |
+| `robots.txt`, `sitemap.xml` | For search engines |
 | `img/` | Photos used by the pages |
 | `CNAME` | Tells GitHub Pages the site's domain (`foreignauto.shop`). Do not delete or rename it. |
 
-The site is plain HTML with no build step. Whatever is in the `main` branch is what visitors see.
+The site is plain HTML. Whatever is in the `main` branch is what visitors see.
+
+Text changes go into `_src/` (home, about) or `_brands.py` (make pages); then run `python3 _build.py` to regenerate the English and Russian pages. Files and folders starting with `_` are not published by GitHub Pages.
 
 ## How to update the site
 
