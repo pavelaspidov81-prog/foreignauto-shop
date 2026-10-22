@@ -36,11 +36,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 META = {
     ('index', 'en'): ('Auto Repair in Aurora, CO | Foreign Auto 5280',
-        'Honest car repair in Aurora, CO. 25 years fixing Japanese, Korean, European and American cars. Photos and a written estimate before any work, 12-month warranty. Call (720) 937-3445.'),
+        'Honest car repair in Aurora, CO. Free diagnostics, a written estimate before any work and a 12-month warranty. 25 years fixing all makes. Call (720) 937-3445.'),
     ('about', 'en'): ('About Us | Foreign Auto 5280, Auto Repair in Aurora, CO',
         'Meet Foreign Auto 5280, an owner-run repair shop in the Mission Viejo area of Aurora, CO. 25 years of experience, service in English and Russian, 12-month warranty.'),
     ('index', 'ru'): ('Русский автосервис в Авроре и Денвере | Foreign Auto 5280',
-        'Автосервис с русскоговорящим мастером в Авроре, Колорадо, рядом с Денвером. 25 лет ремонтируем японские, корейские, европейские и американские машины. Фото и смета до ремонта, гарантия 12 месяцев. (720) 937-3445.'),
+        'Автосервис с русскоговорящим мастером в Авроре, Колорадо, рядом с Денвером. Бесплатная диагностика, смета до ремонта, гарантия 12 месяцев. 25 лет опыта, все марки. (720) 937-3445.'),
     ('about', 'ru'): ('О нас | Foreign Auto 5280, русский автосервис в Авроре, CO',
         'Foreign Auto 5280: небольшой автосервис в районе Mission Viejo в Авроре, Колорадо. Владелец сам работает в цеху, говорим по-русски и по-английски, 25 лет опыта, гарантия 12 месяцев.'),
 }
