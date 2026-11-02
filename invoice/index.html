@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Инвойс · Foreign Auto 5280</title>
+<style>
+:root{--bg:#F1F4F7;--panel:#fff;--ink:#1E2833;--muted:#5F6B78;--line:#DFE5EC;--blue:#3F6FA8;--blue-soft:#E4ECF5;--red:#B3261E;--ok:#1E7A46}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.app{max-width:860px;margin:0 auto;padding:16px 16px 120px}
+header.top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+header.top img{height:34px;width:auto}
+header.top .sp{flex:1}
+.link{background:none;border:0;color:var(--blue);font:inherit;cursor:pointer;padding:6px}
+h1{font-size:1.35rem;margin:6px 0 14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.card h2{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px}
+.grid .wide{grid-column:1/-1}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+label{display:block;font-size:.85rem;color:var(--muted)}
+label b{color:var(--red);font-weight:600}
+input,select,textarea{display:block;width:100%;margin-top:4px;font:inherit;color:var(--ink);background:#fff;border:1px solid #C9D2DC;border-radius:10px;padding:10px 11px;min-height:44px}
+textarea{min-height:64px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:0;border-color:var(--blue)}
+.bad{border-color:var(--red)!important;background:#FFF5F4}
+.items{display:flex;flex-direction:column;gap:10px}
+.item{display:grid;grid-template-columns:120px minmax(0,1fr) 70px 110px 40px;gap:8px;align-items:end;padding-bottom:10px;border-bottom:1px dashed var(--line)}
+.item input,.item select{margin-top:0}
+.item .x{min-height:44px;border:0;background:none;color:var(--muted);font-size:22px;cursor:pointer}
+@media(max-width:640px){.item{grid-template-columns:1fr 1fr 40px}.item .d{grid-column:1/-1;order:-1}.item .t{grid-column:1/-1}}
+.addrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 16px;border-radius:10px;border:1px solid var(--blue);background:#fff;color:var(--blue);font:inherit;font-weight:600;cursor:pointer}
+.btn.primary{background:var(--blue);color:#fff}
+.btn:disabled{opacity:.55;cursor:default}
+.seg{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.seg label{display:flex;align-items:center;gap:8px;border:1px solid #C9D2DC;border-radius:10px;padding:0 14px;min-height:44px;color:var(--ink);font-size:1rem;cursor:pointer}
+.seg input{width:auto;min-height:0;margin:0}
+.seg label:has(input:checked){border-color:var(--blue);background:var(--blue-soft)}
+.check{display:flex;align-items:center;gap:10px;color:var(--ink);font-size:.95rem;margin-top:10px}
+.check input{width:22px;height:22px;min-height:0;margin:0}
+.totals{margin-left:auto;max-width:320px}
+.totals div{display:flex;justify-content:space-between;align-items:center;padding:3px 0}
+.totals .grand{font-weight:700;font-size:1.15rem;border-top:1px solid var(--line);margin-top:6px;padding-top:8px}
+.totals input{width:72px;display:inline-block;min-height:34px;padding:4px 6px;margin:0 4px;text-align:right}
+.bar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+.bar .in{max-width:860px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.bar .sum{flex:1;font-weight:700;font-size:1.1rem}
+.msg{border-radius:12px;padding:12px 14px;margin-bottom:14px;display:none}
+.msg.err{display:block;background:#FDECEA;color:#7A1C16}
+.msg.info{display:block;background:var(--blue-soft);color:#1F3045}
+.done{text-align:center}
+.done .no{font-size:2rem;font-weight:800;letter-spacing:.02em;margin:6px 0}
+.done .btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.lock{max-width:380px;margin:12vh auto 0;text-align:center}
+.lock img{width:100%;max-width:300px;margin-bottom:18px}
+.lock input{text-align:center;font-size:1.3rem;letter-spacing:.3em}
+.lock .btn{width:100%;margin-top:10px}
+.hint{font-size:.85rem;color:var(--muted)}
+[hidden]{display:none!important}
+#print{display:none}
+@media print{
+  @page{size:letter;margin:12mm}
+  html,body{background:#fff}
+  .app,.bar{display:none!important}
+  #print{display:block}
+  .inv-page{break-after:page;page-break-after:always}
+  .inv-page:last-child{break-after:auto;page-break-after:auto}
+}
+</style>
+<style id="inv-css">
+.inv{font-family:Helvetica,Arial,sans-serif;color:#1E2833;font-size:12px;line-height:1.35}
+.inv table{border-collapse:collapse;width:100%}
+.inv td,.inv th{vertical-align:top;padding:0}
+.inv .logo{height:42px;width:auto}
+.inv .shop{font-size:11px;color:#5F6B78;margin-top:6px}
+.inv .ttl{font-size:22px;font-weight:bold;letter-spacing:1px;text-align:right}
+.inv .meta{text-align:right;font-size:12px;margin-top:4px}
+.inv .copy{display:inline-block;margin-top:6px;border:1px solid #1E2833;padding:2px 8px;font-size:10px;font-weight:bold;letter-spacing:1px;text-transform:uppercase}
+.inv .rule{border-top:2px solid #1E2833;margin:12px 0}
+.inv .lbl{font-size:9px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;color:#5F6B78;margin-bottom:3px}
+.inv .box td{padding-right:14px}
+.inv .lines{margin-top:14px}
+.inv .lines th{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#5F6B78;text-align:left;border-bottom:1px solid #1E2833;padding:5px 6px}
+.inv .lines td{border-bottom:1px solid #DFE5EC;padding:6px}
+.inv .r{text-align:right}
+.inv .sums{width:260px;margin-left:auto;margin-top:10px}
+.inv .sums td{padding:3px 6px}
+.inv .sums .g td{font-weight:bold;font-size:15px;border-top:2px solid #1E2833;padding-top:6px}
+.inv .paid{margin-top:8px;text-align:right;font-weight:bold}
+.inv .notes{margin-top:10px}
+.inv .war{margin-top:16px;border:2px solid #1E2833;padding:10px 12px}
+.inv .war h3{margin:0 0 6px;font-size:13px;letter-spacing:1px;text-transform:uppercase}
+.inv .war p{margin:0 0 6px;font-size:10.5px}
+.inv .war ul{margin:0 0 6px 16px;padding:0;font-size:10.5px}
+.inv .sig{margin-top:26px}
+.inv .sig td{width:50%;padding-right:24px}
+.inv .sig .ln{border-top:1px solid #1E2833;padding-top:3px;font-size:10px;color:#5F6B78}
+.inv .foot{margin-top:16px;font-size:10px;color:#5F6B78;text-align:center}
+</style>
+</head>
+<body>
+
+<!-- PIN screen -->
+<div class="app" id="lockView" hidden>
+  <div class="lock">
+    <img src="logo.png" alt="Foreign Auto 5280">
+    <p>Введите PIN мастерской</p>
+    <input id="pin" type="password" inputmode="numeric" autocomplete="off" aria-label="PIN">
+    <button class="btn primary" id="pinBtn">Войти</button>
+    <p class="hint" id="pinMsg"></p>
+  </div>
+</div>
+
+<!-- Form -->
+<div class="app" id="formView" hidden>
+  <header class="top">
+    <img src="logo.png" alt="Foreign Auto 5280">
+    <span class="sp"></span>
+    <button class="link" id="newBtn" type="button">Новый инвойс</button>
+  </header>
+  <h1>Инвойс и гарантия</h1>
+  <div class="msg" id="msg"></div>
+
+  <div class="card">
+    <h2>Клиент</h2>
+    <div class="grid">
+      <label>Имя и фамилия <b>*</b><input id="c_name" autocomplete="off"></label>
+      <label>Телефон <b>*</b><input id="c_phone" type="tel" autocomplete="off"></label>
+      <label>Email клиента<input id="c_email" type="email" autocomplete="off" placeholder="если хочет копию на почту"></label>
+      <label>Адрес<input id="c_addr" autocomplete="off"></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Машина</h2>
+    <div class="grid">
+      <label>Год, марка, модель <b>*</b><input id="v_car" autocomplete="off" placeholder="2015 Toyota Camry"></label>
+      <label>VIN<input id="v_vin" autocomplete="off" maxlength="17" style="text-transform:uppercase"></label>
+      <label>Пробег<input id="v_miles" inputmode="numeric" autocomplete="off"></label>
+      <label>Номер (plate)<input id="v_plate" autocomplete="off" style="text-transform:uppercase"></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Работы и запчасти</h2>
+    <div class="items" id="items"></div>
+    <div class="addrow">
+      <button class="btn" type="button" data-add="labor">+ Работа</button>
+      <button class="btn" type="button" data-add="part">+ Запчасть</button>
+      <button class="btn" type="button" data-add="other">+ Другое</button>
+    </div>
+    <div class="totals" style="margin-top:16px">
+      <div><span>Работа</span><span id="t_labor">$0.00</span></div>
+      <div><span>Запчасти</span><span id="t_parts">$0.00</span></div>
+      <div id="r_other" hidden><span>Другое</span><span id="t_other">$0.00</span></div>
+      <div><span>Налог на запчасти<input id="taxRate" inputmode="decimal">%</span><span id="t_tax">$0.00</span></div>
+      <div class="grand"><span>Итого</span><span id="t_total">$0.00</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Оплата и оформление</h2>
+    <div class="grid">
+      <div class="wide"><label>Способ оплаты <b>*</b></label>
+        <div class="seg" id="paySeg">
+          <label><input type="radio" name="pay" value="cash"> Наличные</label>
+          <label><input type="radio" name="pay" value="card"> Карта</label>
+          <label><input type="radio" name="pay" value="cash_card"> Наличные + карта</label>
+        </div>
+      </div>
+      <label>Дата<input id="date" type="date"></label>
+      <label>Мастер<input id="tech" autocomplete="off"></label>
+      <label class="wide">Примечание (будет на инвойсе)<textarea id="notes"></textarea></label>
+      <div class="wide"><label>Язык документа для клиента</label>
+        <div class="seg">
+          <label><input type="radio" name="lang" value="en"> English</label>
+          <label><input type="radio" name="lang" value="ru"> Русский</label>
+        </div>
+      </div>
+    </div>
+    <label class="check"><input type="checkbox" id="emailClient"> Отправить клиенту копию на email</label>
+    <label class="check"><input type="checkbox" id="shopCopy"> Печатать ещё копию для мастерской (с подписью клиента)</label>
+  </div>
+</div>
+
+<!-- Done -->
+<div class="app" id="doneView" hidden>
+  <header class="top"><img src="logo.png" alt="Foreign Auto 5280"></header>
+  <div class="card done">
+    <div class="hint">Инвойс сохранён</div>
+    <div class="no" id="doneNo"></div>
+    <div id="doneInfo" class="hint"></div>
+    <div class="btns">
+      <button class="btn primary" id="printBtn" type="button">Печать для клиента</button>
+      <button class="btn" id="againBtn" type="button">Новый инвойс</button>
+    </div>
+  </div>
+</div>
+
+<div class="bar" id="bar" hidden>
+  <div class="in">
+    <div class="sum" id="barSum">$0.00</div>
+    <button class="btn primary" id="saveBtn" type="button">Оформить и сохранить</button>
+  </div>
+</div>
+
+<div id="print"></div>
+
+<script>
+/* ===== Settings =====
+   SCRIPT_URL: the Google Apps Script web app address (ends in /exec).
+   Leave empty to run in demo mode: nothing is saved or sent, numbers start with DEMO. */
+var SCRIPT_URL = '';
+var DEFAULT_TAX = '8.0';
+
+var SHOP = {
+  name: 'Foreign Auto 5280 LLC',
+  addr: '3720 S Ouray Way, Aurora, CO 80013',
+  phone: '(720) 937-3445',
+  web: 'foreignauto.shop'
+};
+
+var T = {
+  en: {
+    invoice:'INVOICE', no:'No.', date:'Date', copyC:'Customer copy', copyS:'Shop copy',
+    customer:'Customer', vehicle:'Vehicle', vin:'VIN', miles:'Mileage', plate:'Plate', tech:'Technician',
+    type:'Type', desc:'Description', qty:'Qty', price:'Price', amount:'Amount',
+    labor:'Labor', part:'Part', other:'Other',
+    sLabor:'Labor', sParts:'Parts', sOther:'Other', sTax:'Sales tax on parts', total:'Total',
+    paid:'PAID', cash:'Cash', card:'Card', cash_card:'Cash + card', notes:'Notes',
+    wTitle:'12-month warranty',
+    wText:function(until){return '<p>Foreign Auto 5280 LLC warrants the parts we supplied and the labor we performed on this invoice against defects in materials and workmanship for <b>12 months from the invoice date, through '+until+'</b>. If a covered part or repair fails, bring the vehicle back to us and we will fix it at no charge for the covered parts and labor.</p>'+
+      '<p>To make a claim, call or text '+SHOP.phone+' and show this invoice or give its number.</p>'+
+      '<p>The warranty does not cover:</p><ul>'+
+      '<li>oil, filters or other items supplied by the customer;</li>'+
+      '<li>damage from accidents, misuse, overheating, neglect, lack of maintenance, racing or commercial use;</li>'+
+      '<li>covered work that someone else has repaired or changed;</li>'+
+      '<li>normal wear, and other parts or systems not repaired on this invoice;</li>'+
+      '<li>towing, rental cars, lost time and other incidental costs.</li></ul>'+
+      '<p>Warranty repairs are done at our shop.</p>';},
+    sigCust:'Customer signature', sigShop:'Foreign Auto 5280',
+    thanks:'Thank you for choosing Foreign Auto 5280!'
+  },
+  ru: {
+    invoice:'ИНВОЙС', no:'№', date:'Дата', copyC:'Экземпляр клиента', copyS:'Экземпляр мастерской',
+    customer:'Клиент', vehicle:'Автомобиль', vin:'VIN', miles:'Пробег', plate:'Номер', tech:'Мастер',
+    type:'Тип', desc:'Описание', qty:'Кол.', price:'Цена', amount:'Сумма',
+    labor:'Работа', part:'Запчасть', other:'Другое',
+    sLabor:'Работа', sParts:'Запчасти', sOther:'Другое', sTax:'Налог с продаж на запчасти', total:'Итого',
+    paid:'ОПЛАЧЕНО', cash:'Наличные', card:'Карта', cash_card:'Наличные + карта', notes:'Примечание',
+    wTitle:'Гарантия 12 месяцев',
+    wText:function(until){return '<p>Foreign Auto 5280 LLC даёт гарантию на запчасти, которые мы поставили, и на работу, указанные в этом инвойсе, от дефектов материалов и качества работы на <b>12 месяцев с даты инвойса, до '+until+' включительно</b>. Если запчасть или ремонт по гарантии выйдет из строя, привезите машину к нам, и мы исправим это бесплатно (запчасти и работа по гарантии).</p>'+
+      '<p>Для обращения по гарантии позвоните или напишите на '+SHOP.phone+' и покажите этот инвойс или назовите его номер.</p>'+
+      '<p>Гарантия не распространяется на:</p><ul>'+
+      '<li>масло, фильтры и другое, что привёз клиент;</li>'+
+      '<li>повреждения после аварии, неправильной эксплуатации, перегрева, отсутствия обслуживания, гонок или коммерческого использования;</li>'+
+      '<li>гарантийную работу, которую потом чинил или менял кто-то другой;</li>'+
+      '<li>естественный износ, а также детали и системы, которые не ремонтировались по этому инвойсу;</li>'+
+      '<li>эвакуатор, аренду машины, потерю времени и другие сопутствующие расходы.</li></ul>'+
+      '<p>Гарантийный ремонт выполняется в нашей мастерской.</p>';},
+    sigCust:'Подпись клиента', sigShop:'Foreign Auto 5280',
+    thanks:'Спасибо, что выбрали Foreign Auto 5280!'
+  }
+};
+
+var $ = function(id){return document.getElementById(id);};
+var LS = {
+  get:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},
+  set:function(k,v){try{localStorage.setItem(k,v);}catch(e){}},
+  del:function(k){try{localStorage.removeItem(k);}catch(e){}}
+};
+var DEMO = !SCRIPT_URL;
+var last = null;   // {no, html pages, data}
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function money(n){return '$'+(Math.round(n*100)/100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+function num(v){v=String(v||'').replace(/[$,\s]/g,'').replace(',', '.');var n=parseFloat(v);return isFinite(n)?n:0;}
+function todayISO(){var d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10);}
+function plusYear(iso){var p=iso.split('-').map(Number);var d=new Date(p[0]+1,p[1]-1,p[2]);if(d.getMonth()!==p[1]-1)d=new Date(p[0]+1,p[1],0);return d;}
+function fmtDate(d,lang){if(typeof d==='string'){var p=d.split('-').map(Number);d=new Date(p[0],p[1]-1,p[2]);}
+  return lang==='ru'?d.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'}):d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8);}
+
+/* ---------- items ---------- */
+function addItem(type,data){
+  data=data||{};
+  var row=document.createElement('div');row.className='item';
+  row.innerHTML='<label class="t">Тип<select class="it-type"><option value="labor">Работа</option><option value="part">Запчасть</option><option value="other">Другое</option></select></label>'+
+    '<label class="d">Описание<input class="it-desc" autocomplete="off"></label>'+
+    '<label>Кол.<input class="it-qty" inputmode="decimal" value="1"></label>'+
+    '<label>Цена, $<input class="it-price" inputmode="decimal"></label>'+
+    '<button class="x" type="button" aria-label="Удалить строку">&times;</button>';
+  row.querySelector('.it-type').value=data.type||type||'labor';
+  row.querySelector('.it-desc').value=data.desc||'';
+  if(data.qty!=null)row.querySelector('.it-qty').value=data.qty;
+  if(data.price!=null)row.querySelector('.it-price').value=data.price;
+  row.querySelector('.x').onclick=function(){row.remove();update();};
+  $('items').appendChild(row);
+  return row;
+}
+function readItems(){
+  return Array.prototype.map.call(document.querySelectorAll('.item'),function(r){
+    return {type:r.querySelector('.it-type').value,desc:r.querySelector('.it-desc').value.trim(),
+      qty:r.querySelector('.it-qty').value.trim(),price:r.querySelector('.it-price').value.trim()};
+  }).filter(function(i){return i.desc||i.price;});
+}
+
+/* ---------- read / totals ---------- */
+var FIELDS=['c_name','c_phone','c_email','c_addr','v_car','v_vin','v_miles','v_plate','date','tech','notes','taxRate'];
+function radio(name){var el=document.querySelector('input[name="'+name+'"]:checked');return el?el.value:'';}
+function read(){
+  var d={};FIELDS.forEach(function(f){d[f]=$(f).value.trim();});
+  d.v_vin=d.v_vin.toUpperCase();d.v_plate=d.v_plate.toUpperCase();
+  d.items=readItems();d.pay=radio('pay');d.lang=radio('lang')||'en';
+  d.emailClient=$('emailClient').checked;d.shopCopy=$('shopCopy').checked;
+  var s={labor:0,part:0,other:0};
+  d.items.forEach(function(i){var a=num(i.qty||1)*num(i.price);i.amount=Math.round(a*100)/100;s[i.type]+=i.amount;});
+  d.sum={labor:s.labor,parts:s.part,other:s.other,rate:num(d.taxRate)};
+  d.sum.tax=Math.round(s.part*d.sum.rate)/100;
+  d.sum.total=Math.round((s.labor+s.part+s.other+d.sum.tax)*100)/100;
+  return d;
+}
+function update(){
+  var d=read();
+  $('t_labor').textContent=money(d.sum.labor);$('t_parts').textContent=money(d.sum.parts);
+  $('t_other').textContent=money(d.sum.other);$('r_other').hidden=!d.sum.other;
+  $('t_tax').textContent=money(d.sum.tax);$('t_total').textContent=money(d.sum.total);
+  $('barSum').textContent=money(d.sum.total);
+  saveDraft();
+}
+
+/* ---------- draft (kept on this device until saved) ---------- */
+function saveDraft(){var d=read();LS.set('fa_inv_draft',JSON.stringify(d));if(d.taxRate)LS.set('fa_inv_tax',d.taxRate);if(d.tech)LS.set('fa_inv_tech',d.tech);}
+function loadDraft(){
+  var d=null;try{d=JSON.parse(LS.get('fa_inv_draft')||'null');}catch(e){}
+  resetForm();
+  if(!d)return;
+  FIELDS.forEach(function(f){if(d[f]!=null&&d[f]!=='')$(f).value=d[f];});
+  if(d.items&&d.items.length){$('items').innerHTML='';d.items.forEach(function(i){addItem(i.type,i);});}
+  if(d.pay)document.querySelector('input[name="pay"][value="'+d.pay+'"]').checked=true;
+  if(d.lang)document.querySelector('input[name="lang"][value="'+d.lang+'"]').checked=true;
+  $('emailClient').checked=!!d.emailClient;$('shopCopy').checked=!!d.shopCopy;
+  if(d.uid)pendingUid=d.uid;
+}
+var pendingUid=null;
+function resetForm(){
+  FIELDS.forEach(function(f){$(f).value='';$(f).classList.remove('bad');});
+  $('date').value=todayISO();$('taxRate').value=LS.get('fa_inv_tax')||DEFAULT_TAX;$('tech').value=LS.get('fa_inv_tech')||'';
+  $('items').innerHTML='';addItem('labor');addItem('part');
+  document.querySelectorAll('input[name="pay"]').forEach(function(r){r.checked=false;});
+  document.querySelector('input[name="lang"][value="en"]').checked=true;
+  $('emailClient').checked=false;$('shopCopy').checked=false;
+  pendingUid=null;msg('');
+}
+
+/* ---------- document ---------- */
+function docHTML(d,no,copy,logo){
+  var t=T[d.lang]||T.en;
+  var rows=d.items.map(function(i){
+    return '<tr><td>'+esc(t[i.type])+'</td><td>'+esc(i.desc)+'</td><td class="r">'+esc(i.qty||'1')+'</td><td class="r">'+money(num(i.price))+'</td><td class="r">'+money(i.amount)+'</td></tr>';
+  }).join('');
+  var car=[esc(d.v_car)];
+  if(d.v_vin)car.push(t.vin+': '+esc(d.v_vin));
+  if(d.v_miles)car.push(t.miles+': '+esc(d.v_miles));
+  if(d.v_plate)car.push(t.plate+': '+esc(d.v_plate));
+  var cust=[esc(d.c_name),esc(d.c_phone)];if(d.c_email)cust.push(esc(d.c_email));if(d.c_addr)cust.push(esc(d.c_addr));
+  var until=fmtDate(plusYear(d.date),d.lang);
+  var sums='<tr><td>'+t.sLabor+'</td><td class="r">'+money(d.sum.labor)+'</td></tr>'+
+    '<tr><td>'+t.sParts+'</td><td class="r">'+money(d.sum.parts)+'</td></tr>'+
+    (d.sum.other?'<tr><td>'+t.sOther+'</td><td class="r">'+money(d.sum.other)+'</td></tr>':'')+
+    (d.sum.tax?'<tr><td>'+t.sTax+' ('+d.sum.rate+'%)</td><td class="r">'+money(d.sum.tax)+'</td></tr>':'')+
+    '<tr class="g"><td>'+t.total+'</td><td class="r">'+money(d.sum.total)+'</td></tr>';
+  return '<div class="inv">'+
+    '<table><tr><td>'+(logo?'<img class="logo" src="'+logo+'" alt="Foreign Auto 5280">':'<b style="font-size:18px">FOREIGN AUTO 5280</b>')+
+      '<div class="shop">'+SHOP.name+' · '+SHOP.addr+'<br>'+SHOP.phone+' · '+SHOP.web+'</div></td>'+
+      '<td style="width:220px"><div class="ttl">'+t.invoice+'</div><div class="meta">'+t.no+' <b>'+no+'</b><br>'+t.date+': '+fmtDate(d.date,d.lang)+'</div>'+
+      '<div style="text-align:right"><span class="copy">'+(copy==='shop'?t.copyS:t.copyC)+'</span></div></td></tr></table>'+
+    '<div class="rule"></div>'+
+    '<table class="box"><tr><td style="width:45%"><div class="lbl">'+t.customer+'</div>'+cust.join('<br>')+'</td>'+
+      '<td style="width:40%"><div class="lbl">'+t.vehicle+'</div>'+car.join('<br>')+'</td>'+
+      '<td>'+(d.tech?'<div class="lbl">'+t.tech+'</div>'+esc(d.tech):'')+'</td></tr></table>'+
+    '<table class="lines"><tr><th style="width:70px">'+t.type+'</th><th>'+t.desc+'</th><th class="r" style="width:40px">'+t.qty+'</th><th class="r" style="width:80px">'+t.price+'</th><th class="r" style="width:90px">'+t.amount+'</th></tr>'+rows+'</table>'+
+    '<table class="sums">'+sums+'</table>'+
+    '<div class="paid">'+t.paid+' · '+t[d.pay]+' · '+money(d.sum.total)+'</div>'+
+    (d.notes?'<div class="notes"><div class="lbl">'+t.notes+'</div>'+esc(d.notes).replace(/\n/g,'<br>')+'</div>':'')+
+    '<div class="war"><h3>'+t.wTitle+'</h3>'+t.wText(until)+'</div>'+
+    '<table class="sig"><tr><td><div class="ln">'+t.sigCust+'</div></td><td><div class="ln">'+t.sigShop+'</div></td></tr></table>'+
+    '<div class="foot">'+t.thanks+' · '+SHOP.phone+' · '+SHOP.web+'</div>'+
+  '</div>';
+}
+
+function logoData(){
+  return fetch('logo.png').then(function(r){return r.blob();}).then(function(b){
+    return new Promise(function(res){var fr=new FileReader();fr.onload=function(){res(fr.result);};fr.onerror=function(){res('');};fr.readAsDataURL(b);});
+  }).catch(function(){return '';});
+}
+
+/* ---------- validation ---------- */
+function validate(d){
+  var bad=[];
+  ['c_name','c_phone','v_car'].forEach(function(f){var ok=!!d[f];$(f).classList.toggle('bad',!ok);if(!ok)bad.push(f);});
+  if(d.c_email&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.c_email)){$('c_email').classList.add('bad');bad.push('c_email');}else $('c_email').classList.remove('bad');
+  if(d.emailClient&&!d.c_email){$('c_email').classList.add('bad');bad.push('c_email');}
+  var ok=d.items.length&&d.items.every(function(i){return i.desc&&num(i.price)>0;});
+  document.querySelectorAll('.item').forEach(function(r){
+    var de=r.querySelector('.it-desc'),pr=r.querySelector('.it-price');var used=de.value.trim()||pr.value.trim();
+    de.classList.toggle('bad',!!used&&!de.value.trim());pr.classList.toggle('bad',!!used&&!(num(pr.value)>0));
+  });
+  if(!ok)bad.push('items');
+  if(!d.pay)bad.push('pay');
+  $('paySeg').style.outline=d.pay?'':'2px solid #B3261E';$('paySeg').style.borderRadius='10px';
+  var m={c_name:'имя клиента',c_phone:'телефон',v_car:'машину',c_email:'правильный email клиента',items:'хотя бы одну строку с описанием и ценой',pay:'способ оплаты'};
+  return bad.length?'Заполните: '+bad.filter(function(v,i,a){return a.indexOf(v)===i;}).map(function(b){return m[b];}).join(', ')+'.':'';
+}
+function msg(text,kind){var m=$('msg');m.className='msg'+(text?' '+(kind||'err'):'');m.textContent=text||'';if(text)m.scrollIntoView({behavior:'smooth',block:'center'});}
+
+/* ---------- server ---------- */
+function call(payload){
+  payload.pin=LS.get('fa_inv_pin')||'';
+  if(DEMO){
+    if(payload.action==='ping')return Promise.resolve({ok:true});
+    var n=Number(LS.get('fa_inv_demo')||'0')+1;LS.set('fa_inv_demo',String(n));
+    return new Promise(function(r){setTimeout(function(){r({ok:true,no:'DEMO-'+String(n).padStart(4,'0'),demo:true});},400);});
+  }
+  return fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
+    .then(function(r){return r.json();});
+}
+
+function save(){
+  var d=read();var err=validate(d);
+  if(err){msg(err);return;}
+  msg('');
+  var btn=$('saveBtn');btn.disabled=true;btn.textContent='Сохраняю…';
+  if(!pendingUid){pendingUid=uid();}
+  d.uid=pendingUid;LS.set('fa_inv_draft',JSON.stringify(d));
+  logoData().then(function(logo){
+    var pages=['<div class="inv-page">'+docHTML(d,'{{NO}}','customer',logo)+'</div>'];
+    var pdfHtml='<html><head><meta charset="utf-8"><style>'+$('inv-css').textContent+'</style></head><body>'+docHTML(d,'{{NO}}','shop',logo)+'</body></html>';
+    var clientHtml=d.emailClient?'<html><head><meta charset="utf-8"><style>'+$('inv-css').textContent+'</style></head><body>'+docHTML(d,'{{NO}}','customer',logo)+'</body></html>':'';
+    return call({action:'save',uid:d.uid,data:strip(d),html:pdfHtml,clientHtml:clientHtml}).then(function(res){
+      if(!res||!res.ok){
+        if(res&&res.error==='pin'){LS.del('fa_inv_pin');showLock('PIN не подходит. Введите заново.');return;}
+        throw new Error(res&&res.error||'unknown');
+      }
+      var no=res.no;
+      if(d.shopCopy)pages.push('<div class="inv-page">'+docHTML(d,no,'shop',logo)+'</div>');
+      pages[0]=pages[0].replace(/\{\{NO\}\}/g,no);
+      last={no:no,pages:pages};
+      LS.set('fa_inv_last',JSON.stringify(last));
+      LS.del('fa_inv_draft');pendingUid=null;
+      showDone(no,d,res);
+    });
+  }).catch(function(e){
+    msg('Не получилось сохранить ('+e.message+'). Проверьте интернет и нажмите «Оформить» ещё раз: данные не потеряются, двойного инвойса не будет.');
+  }).then(function(){btn.disabled=false;btn.textContent='Оформить и сохранить';});
+}
+function strip(d){var c=JSON.parse(JSON.stringify(d));delete c.shopCopy;return c;}
+
+/* ---------- views ---------- */
+function show(v){['lockView','formView','doneView'].forEach(function(id){$(id).hidden=id!==v;});$('bar').hidden=v!=='formView';window.scrollTo(0,0);}
+function showLock(text){show('lockView');$('pinMsg').textContent=text||'';$('pin').value='';$('pin').focus();}
+function showForm(){show('formView');if(DEMO)msg('Демо-режим: Google Таблица ещё не подключена, поэтому инвойсы не сохраняются и не уходят на почту.','info');}
+function showDone(no,d,res){
+  show('doneView');$('doneNo').textContent=no;
+  var info=res.demo?'Демо: ничего не отправлено.':'Сохранено в Google Таблице, PDF отправлен на почту мастерской'+(d.emailClient?' и клиенту ('+d.c_email+')':'')+'.';
+  $('doneInfo').textContent=info;
+}
+function printLast(){if(!last)return;$('print').innerHTML=last.pages.join('');window.print();}
+
+/* ---------- init ---------- */
+document.querySelectorAll('[data-add]').forEach(function(b){b.onclick=function(){var r=addItem(b.getAttribute('data-add'));r.querySelector('.it-desc').focus();update();};});
+$('formView').addEventListener('input',function(e){if(e.target.classList)e.target.classList.remove('bad');update();});
+$('formView').addEventListener('change',function(e){if(e.target.name==='pay')$('paySeg').style.outline='';update();});
+$('saveBtn').onclick=save;
+$('printBtn').onclick=printLast;
+$('againBtn').onclick=function(){resetForm();update();showForm();};
+$('newBtn').onclick=function(){if(confirm('Очистить форму и начать новый инвойс?')){resetForm();update();}};
+$('pinBtn').onclick=function(){
+  var p=$('pin').value.trim();if(!p)return;LS.set('fa_inv_pin',p);$('pinMsg').textContent='Проверяю…';
+  call({action:'ping'}).then(function(r){if(r&&r.ok)showForm();else{LS.del('fa_inv_pin');$('pinMsg').textContent='PIN не подходит.';}})
+    .catch(function(){$('pinMsg').textContent='Нет связи. Проверьте интернет.';LS.del('fa_inv_pin');});
+};
+$('pin').addEventListener('keydown',function(e){if(e.key==='Enter')$('pinBtn').click();});
+
+loadDraft();update();
+try{last=JSON.parse(LS.get('fa_inv_last')||'null');}catch(e){}
+if(DEMO||LS.get('fa_inv_pin'))showForm();else showLock();
+</script>
+</body>
+</html>

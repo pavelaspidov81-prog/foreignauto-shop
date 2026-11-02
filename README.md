@@ -17,6 +17,8 @@ Live at **https://foreignauto.shop** (served by GitHub Pages).
 | `_build.py`, `_brands.py` | Build script and make-page texts. Not published. |
 | `robots.txt`, `sitemap.xml` | For search engines |
 | `img/` | Photos used by the pages |
+| `invoice/` | Staff-only invoice and warranty page (PIN, hidden from search). Its address goes in `SCRIPT_URL` inside `invoice/index.html`. |
+| `_invoice-apps-script/Code.gs` | Google Apps Script behind the invoice page: numbering, Google Sheet, PDF to email and Drive. Not published. |
 | `CNAME` | Tells GitHub Pages the site's domain (`foreignauto.shop`). Do not delete or rename it. |
 
 The site is plain HTML. Whatever is in the `main` branch is what visitors see.
