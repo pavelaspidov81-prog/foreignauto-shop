@@ -8,7 +8,9 @@
  * What it does for every invoice sent from foreignauto.shop/invoice/:
  *   - checks the shop PIN,
  *   - gives the next number (FA-0001, FA-0002, ...),
- *   - adds a row to the "Invoices" sheet,
+ *   - adds a row to the "Invoices" sheet (all invoices),
+ *   - adds a row to the "Cash" or "Card" sheet by how it was paid
+ *     (cash + card: a row in each, with that part of the amount),
  *   - saves the PDF to the "Foreign Auto Invoices" folder on Google Drive,
  *   - emails the PDF to the shop (and to the customer when asked).
  */
@@ -21,9 +23,11 @@ var SHOP_EMAIL = '';              // where invoices go; empty = this Google acco
 var SHEET = 'Invoices';
 var FOLDER = 'Foreign Auto Invoices';
 var PREFIX = 'FA-';
+var PAY_SHEETS = { cash: 'Cash', card: 'Card' };
+var PAY_HEAD = ['Number', 'Date', 'Customer', 'Phone', 'Vehicle', 'Amount', 'Invoice total', 'Paid how', 'Technician', 'PDF'];
 var HEAD = ['Number', 'Date', 'Warranty until', 'Customer', 'Phone', 'Email', 'Address',
   'Vehicle', 'VIN', 'Mileage', 'Plate', 'Work and parts', 'Labor', 'Parts', 'Other',
-  'Tax', 'Total', 'Payment', 'Technician', 'Notes', 'PDF', 'Saved at', 'ID'];
+  'Tax', 'Total', 'Cash', 'Card', 'Payment', 'Technician', 'Notes', 'PDF', 'Saved at', 'ID'];
 
 /** Run once from the editor: saves the settings, creates the sheet and the Drive folder. */
 function setup() {
@@ -32,6 +36,8 @@ function setup() {
   p.setProperty('SHOP_EMAIL', SHOP_EMAIL || Session.getEffectiveUser().getEmail());
   if (!p.getProperty('NEXT')) p.setProperty('NEXT', '1');
   sheet_();
+  paySheet_('cash');
+  paySheet_('card');
   folder_();
   Logger.log('Ready. Invoices go to ' + p.getProperty('SHOP_EMAIL') + '. Next number: ' + PREFIX + pad_(p.getProperty('NEXT')));
 }
@@ -81,6 +87,7 @@ function save_(req, p) {
   var pdf = Utilities.newBlob(html, 'text/html', no + '.html').getAs('application/pdf').setName(no + '.pdf');
   var file = folder_().createFile(pdf);
   if (r) sh.getRange(r, HEAD.indexOf('PDF') + 1).setValue(file.getUrl());
+  payRows_(no, d, file.getUrl());
 
   var total = money_(d.sum && d.sum.total);
   var shopEmail = p.getProperty('SHOP_EMAIL');
@@ -120,7 +127,7 @@ function row_(no, d, pdfUrl, uid) {
   var until = new Date(date); until.setFullYear(until.getFullYear() + 1);
   return [no, date, until, d.c_name, "'" + (d.c_phone || ''), d.c_email, d.c_addr,
     d.v_car, d.v_vin, d.v_miles, d.v_plate, items, s.labor, s.parts, s.other,
-    s.tax, s.total, pays[d.pay] || d.pay, d.tech, d.notes, pdfUrl, new Date(), uid || ''];
+    s.tax, s.total, paid_(d).cash, paid_(d).card, pays[d.pay] || d.pay, d.tech, d.notes, pdfUrl, new Date(), uid || ''];
 }
 
 function sheet_() {
@@ -132,10 +139,44 @@ function sheet_() {
     sh.setFrozenRows(1);
     sh.getRange(1, 1, 1, HEAD.length).setFontWeight('bold').setBackground('#E4ECF5');
     sh.getRange('B:C').setNumberFormat('mm/dd/yyyy');
-    sh.getRange('M:Q').setNumberFormat('$#,##0.00');
-    sh.getRange('V:V').setNumberFormat('mm/dd/yyyy hh:mm');
+    sh.getRange('M:S').setNumberFormat('$#,##0.00');
+    sh.getRange('X:X').setNumberFormat('mm/dd/yyyy hh:mm');
     sh.setColumnWidth(12, 320);
     sh.hideColumns(HEAD.length);
+  }
+  return sh;
+}
+
+/** Cash and card amounts of an invoice. */
+function paid_(d) {
+  var total = Number(d.sum && d.sum.total || 0);
+  if (d.paid) return { cash: Number(d.paid.cash || 0), card: Number(d.paid.card || 0) };
+  return d.pay === 'card' ? { cash: 0, card: total } : { cash: total, card: 0 };
+}
+
+/** One row on the Cash sheet and/or the Card sheet, with the part paid that way. */
+function payRows_(no, d, pdfUrl) {
+  var p = paid_(d);
+  var how = { cash: 'Cash', card: 'Card', cash_card: 'Cash + card' }[d.pay] || d.pay;
+  var date = d.date ? new Date(d.date + 'T12:00:00') : new Date();
+  ['cash', 'card'].forEach(function (k) {
+    if (p[k] > 0) {
+      paySheet_(k).appendRow([no, date, d.c_name, "'" + (d.c_phone || ''), d.v_car, p[k],
+        d.sum && d.sum.total, how, d.tech, pdfUrl]);
+    }
+  });
+}
+
+function paySheet_(k) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(PAY_SHEETS[k]);
+  if (!sh) {
+    sh = ss.insertSheet(PAY_SHEETS[k], k === 'cash' ? 1 : 2);
+    sh.appendRow(PAY_HEAD);
+    sh.setFrozenRows(1);
+    sh.getRange(1, 1, 1, PAY_HEAD.length).setFontWeight('bold').setBackground(k === 'cash' ? '#E5F4E4' : '#E7F1FB');
+    sh.getRange('B:B').setNumberFormat('mm/dd/yyyy');
+    sh.getRange('F:G').setNumberFormat('$#,##0.00');
   }
   return sh;
 }
